@@ -610,7 +610,7 @@ def get_status():
 # Send data to arduino
 def send_data():
  while True: # Repeat forever  
-serial.write(b'gamepad_data['left_stick_x'];gamepad_data['left_stick_y'];gamepad_data['right_stick_x'];gamepad_data['right_stick_x']')
+serial.write(b'gamepad_data['left_stick_x'];gamepad_data['left_stick_y'];gamepad_data['right_stick_x'];gamepad_data['right_stick_y']')
 
 
 
