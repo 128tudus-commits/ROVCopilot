@@ -293,7 +293,7 @@ HTML_PAGE = '''
 </head>
 <body>
     <div class="container">
-        <h1>🎮 ROVcoPILOT</h1>
+        <h1>ROVcoPILOT</h1>
         <div class="status" id="status">Waiting for gamepad...</div>
         
         <div class="grid">
@@ -586,30 +586,45 @@ def get_status():
     })
 
 # Sending data to console, For early tests
-def print_gamepad_data():
-    """Periodically print gamepad data to console"""
-    import time
-    while True:
-        time.sleep(1)
-        with data_lock:
-            if gamepad_data['timestamp'] is not None:
-                print("\n" + "="*60)
-                print(f"Gamepad Data ({gamepad_data['timestamp']})")
-                print("="*60)
-                print(f"Left Stick:  X={gamepad_data['left_stick_x']:6.2f}, Y={gamepad_data['left_stick_y']:6.2f}")
-                print(f"Right Stick: X={gamepad_data['right_stick_x']:6.2f}, Y={gamepad_data['right_stick_y']:6.2f}")
-                print(f"Triggers:    LT={gamepad_data['left_trigger']:6.2f}, RT={gamepad_data['right_trigger']:6.2f}")
-                print(f"D-Pad:       X={gamepad_data['dpad_x']:2d}, Y={gamepad_data['dpad_y']:2d}")
-                print(f"Buttons:     A={gamepad_data['button_a']}, B={gamepad_data['button_b']}, " +
-                      f"X={gamepad_data['button_x']}, Y={gamepad_data['button_y']}")
-                print(f"Bumpers:     LB={gamepad_data['lb']}, RB={gamepad_data['rb']}")
-                print(f"Menu:        BACK={gamepad_data['back']}, START={gamepad_data['start']}")
-                print(f"Stick Click: L={gamepad_data['left_stick_click']}, R={gamepad_data['right_stick_click']}")
-                print("="*60)
+# def print_gamepad_data():
+#     """Periodically print gamepad data to console"""
+#     import time
+#     while True:
+#         time.sleep(1)
+#         with data_lock:
+#             if gamepad_data['timestamp'] is not None:
+#                 print("\n" + "="*60)
+#                 print(f"Gamepad Data ({gamepad_data['timestamp']})")
+#                 print("="*60)
+#                 print(f"Left Stick:  X={gamepad_data['left_stick_x']:6.2f}, Y={gamepad_data['left_stick_y']:6.2f}")
+#                 print(f"Right Stick: X={gamepad_data['right_stick_x']:6.2f}, Y={gamepad_data['right_stick_y']:6.2f}")
+#                 print(f"Triggers:    LT={gamepad_data['left_trigger']:6.2f}, RT={gamepad_data['right_trigger']:6.2f}")
+#                 print(f"D-Pad:       X={gamepad_data['dpad_x']:2d}, Y={gamepad_data['dpad_y']:2d}")
+#                 print(f"Buttons:     A={gamepad_data['button_a']}, B={gamepad_data['button_b']}, " +
+#                       f"X={gamepad_data['button_x']}, Y={gamepad_data['button_y']}")
+#                 print(f"Bumpers:     LB={gamepad_data['lb']}, RB={gamepad_data['rb']}")
+#                 print(f"Menu:        BACK={gamepad_data['back']}, START={gamepad_data['start']}")
+#                 print(f"Stick Click: L={gamepad_data['left_stick_click']}, R={gamepad_data['right_stick_click']}")
+#                 print("="*60)
+
+# Send data to arduino
+def send_data():
+ while True: # Repeat forever  
+serial.write(b'gamepad_data['left_stick_x'];gamepad_data['left_stick_y'];gamepad_data['right_stick_x'];gamepad_data['right_stick_x']')
 
 
+
+
+
+
+
+
+
+
+
+# When WebServer Starts
 if __name__ == '__main__':
-    print_thread = threading.Thread(target=print_gamepad_data, daemon=True)
+    print_thread = threading.Thread(target=send_data, daemon=True)
     print_thread.start()
     
     print("╔════════════════════════════════════════════════════╗")
