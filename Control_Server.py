@@ -658,7 +658,7 @@ def send_data():
 if __name__ == '__main__':
     thread1 = threading.Thread(target=save_joy, daemon=True)
     thread2 = threading.Thread(target=calc_motor, daemon=True)
-    thread = threading.Thread(target=send_data, daemon=True)
+    thread3 = threading.Thread(target=send_data, daemon=True)
     thread1.start()
     thread2.start()
     thread3.start()
