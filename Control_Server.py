@@ -1,3 +1,9 @@
+# Create variables
+Yaw = 0
+Throttle = 0
+Roll = 0
+Pitch = 0
+
 # Import dependencies
 import serial
 from flask import Flask, jsonify, request
@@ -615,6 +621,7 @@ def get_status():
 # Save joystick data as variables
 def save_joy():
     while True: # Repeat forever
+         global Yaw, Throttle, Roll, Pitch
         Yaw = gamepad_data['left_stick_x']  
         Throttle = gamepad_data['left_stick_y']   
         Roll = gamepad_data['right_stick_x']
