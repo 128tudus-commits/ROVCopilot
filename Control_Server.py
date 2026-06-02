@@ -9,7 +9,8 @@ serial = serial.Serial('/dev/ttyUSB0')
 serial.baudrate = 115200
 
 # Motor config, Only Normal for now
-Motorconf = Normal
+# 1 is Normal
+Motorconf = 1
 
 # Flask web app
 app = Flask(__name__)
@@ -625,7 +626,7 @@ def save_joy():
 # Calculate motor vals
 def calc_motor():
  while True: # Repeat forever
-        if Motorconf == Normal:
+        if Motorconf == 1:
                 M1 = Surge - Yaw
                 M2 = Surge + Yaw
                 M3 = Pitch - Roll
