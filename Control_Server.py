@@ -8,6 +8,9 @@ from datetime import datetime
 serial = serial.Serial('/dev/ttyUSB0')
 serial.baudrate = 115200
 
+# Motor config, Only Normal for now
+Motorconf = Normal
+
 # Flask web app
 app = Flask(__name__)
 gamepad_data = {
@@ -607,10 +610,38 @@ def get_status():
 #                 print(f"Stick Click: L={gamepad_data['left_stick_click']}, R={gamepad_data['right_stick_click']}")
 #                 print("="*60)
 
+
+# Save joystick data as variables
+def save_joy():
+ while True: # Repeat forever
+ Yaw = gamepad_data['left_stick_x']  
+ Surge = gamepad_data['left_stick_y']   
+ Roll = gamepad_data['right_stick_x']
+ Pitch = gamepad_data['right_stick_y']
+
+
+
+
+# Calculate motor vals
+def calc_motor():
+ while True: # Repeat forever
+  if Motorconf == Normal:
+   M1 = Surge - Yaw
+   M2 = Surge + Yaw
+   M3 = Pitch - Roll
+   M4 = Pitch + Roll   
+      
+     
+
+
+
+
+
+
 # Send data to arduino
 def send_data():
  while True: # Repeat forever  
-serial.write(b'gamepad_data['left_stick_x'];gamepad_data['left_stick_y'];gamepad_data['right_stick_x'];gamepad_data['right_stick_y']')
+serial.write(b'M1;M2;M3;M4')
 
 
 
@@ -624,8 +655,12 @@ serial.write(b'gamepad_data['left_stick_x'];gamepad_data['left_stick_y'];gamepad
 
 # When WebServer Starts
 if __name__ == '__main__':
-    print_thread = threading.Thread(target=send_data, daemon=True)
-    print_thread.start()
+    thread1 = threading.Thread(target=save_joy, daemon=True)
+    thread2 = threading.Thread(target=calc_motor, daemon=True)
+    thread = threading.Thread(target=send_data, daemon=True)
+    thread1.start()
+    thread2.start()
+    thread3.start()
     
     print("╔════════════════════════════════════════════════════╗")
     print("║          ROVcoPILOT Server Starting...             ║")
