@@ -626,10 +626,10 @@ def save_joy():
 def calc_motor():
  while True: # Repeat forever
         if Motorconf == Normal:
-        M1 = Surge - Yaw
-        M2 = Surge + Yaw
-        M3 = Pitch - Roll
-        M4 = Pitch + Roll   
+                M1 = Surge - Yaw
+                M2 = Surge + Yaw
+                M3 = Pitch - Roll
+                M4 = Pitch + Roll   
       
      
 
