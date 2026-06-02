@@ -616,7 +616,7 @@ def get_status():
 def save_joy():
     while True: # Repeat forever
         Yaw = gamepad_data['left_stick_x']  
-        Surge = gamepad_data['left_stick_y']   
+        Throttle = gamepad_data['left_stick_y']   
         Roll = gamepad_data['right_stick_x']
         Pitch = gamepad_data['right_stick_y']
 
@@ -627,8 +627,8 @@ def save_joy():
 def calc_motor():
  while True: # Repeat forever
         if Motorconf == 1:
-                M1 = Surge - Yaw
-                M2 = Surge + Yaw
+                M1 = Throttle - Yaw
+                M2 = Throttle + Yaw
                 M3 = Pitch - Roll
                 M4 = Pitch + Roll   
       
