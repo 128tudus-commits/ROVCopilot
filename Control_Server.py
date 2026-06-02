@@ -613,12 +613,11 @@ def get_status():
 
 # Save joystick data as variables
 def save_joy():
- while True: # Repeat forever
-     
-Yaw = gamepad_data['left_stick_x']  
-Surge = gamepad_data['left_stick_y']   
-Roll = gamepad_data['right_stick_x']
-Pitch = gamepad_data['right_stick_y']
+    while True: # Repeat forever
+        Yaw = gamepad_data['left_stick_x']  
+        Surge = gamepad_data['left_stick_y']   
+        Roll = gamepad_data['right_stick_x']
+        Pitch = gamepad_data['right_stick_y']
 
 
 
@@ -626,12 +625,11 @@ Pitch = gamepad_data['right_stick_y']
 # Calculate motor vals
 def calc_motor():
  while True: # Repeat forever
-     
-  if Motorconf == Normal:
-   M1 = Surge - Yaw
-   M2 = Surge + Yaw
-   M3 = Pitch - Roll
-   M4 = Pitch + Roll   
+        if Motorconf == Normal:
+        M1 = Surge - Yaw
+        M2 = Surge + Yaw
+        M3 = Pitch - Roll
+        M4 = Pitch + Roll   
       
      
 
@@ -643,8 +641,7 @@ def calc_motor():
 # Send data to arduino
 def send_data():
  while True: # Repeat forever
-     
-serial.write(b'M1;M2;M3;M4')
+        serial.write(b'M1;M2;M3;M4')
 
 
 
