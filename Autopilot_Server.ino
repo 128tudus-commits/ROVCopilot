@@ -24,11 +24,11 @@ M3 = Serial.parseFloat();
 M4 = Serial.parseFloat();
 
 
-if (M1 > 0.1){
+if (M1 > 0.5){
  digitalWrite(2, HIGH);
  digitalWrite(3, LOW);
 }
-else if (M1 < 0.1){
+else if (M1 < 0.5){
  digitalWrite(3, HIGH);
  digitalWrite(2, LOW);
 }
@@ -36,11 +36,11 @@ else{
 digitalWrite(2, LOW);
 digitalWrite(3, LOW);
 }
-if (M2 > 0.1){
+if (M2 > 0.5){
  digitalWrite(4, HIGH);
  digitalWrite(5, LOW);
 }
-else if (M2 < 0.1){
+else if (M2 < 0.5){
  digitalWrite(5, HIGH);
  digitalWrite(4, LOW);
 }
@@ -50,11 +50,11 @@ digitalWrite(5, LOW);
 }
 
 
-if (M3 > 0.1){
+if (M3 > 0.5){
  digitalWrite(6, HIGH);
  digitalWrite(7, LOW);
 }
-else if (M3 < 0.1){
+else if (M3 < 0.5){
  digitalWrite(7, HIGH);
  digitalWrite(6, LOW);
 }
@@ -64,11 +64,11 @@ digitalWrite(7, LOW);
 }
 
 
-if (M4 > 0.1){
+if (M4 > 0.5){
  digitalWrite(8, HIGH);
  digitalWrite(9, LOW);
 }
-else if (M4 < 0.1){
+else if (M4 < 0.5){
  digitalWrite(9, HIGH);
  digitalWrite(8, LOW);
 }
