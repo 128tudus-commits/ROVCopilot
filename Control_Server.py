@@ -13,6 +13,8 @@ from datetime import datetime
 # Init pyserial
 serial = serial.Serial('/dev/ttyUSB0')
 serial.baudrate = 115200
+ serial.write(b'0;0;0;0')
+
 
 # Motor config, Only Normal for now
 # 1 is Normal
