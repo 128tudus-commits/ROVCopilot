@@ -620,38 +620,42 @@ def get_status():
 #                 print("="*60)
 
 
-# Save joystick data as variables
+import time
+
+Yaw, Throttle, Roll, Pitch = 0.0, 0.0, 0.0, 0.0
+M1, M2, M3, M4 = 0.0, 0.0, 0.0, 0.0
+
 def save_joy():
-    while True: # Repeat forever
-        global Yaw, Throttle, Roll, Pitch
-        Yaw = gamepad_data['left_stick_x']  
-        Throttle = gamepad_data['left_stick_y']   
-        Roll = gamepad_data['right_stick_x']
-        Pitch = gamepad_data['right_stick_y']
+    global Yaw, Throttle, Roll, Pitch
+    Yaw = gamepad_data.get('left_stick_x', 0.0)  
+    Throttle = gamepad_data.get('left_stick_y', 0.0)   
+    Roll = gamepad_data.get('right_stick_x', 0.0)
+    Pitch = gamepad_data.get('right_stick_y', 0.0)
 
-
-
-
-# Calculate motor vals
 def calc_motor():
- while True: # Repeat forever
-        if Motorconf == 1:
-                M1 = Throttle - Yaw
-                M2 = Throttle + Yaw
-                M3 = Pitch - Roll
-                M4 = Pitch + Roll   
-      
-     
+    global M1, M2, M3, M4
+    if Motorconf == 1:
+        M1 = Throttle - Yaw
+        M2 = Throttle + Yaw
+        M3 = Pitch - Roll
+        M4 = Pitch + Roll   
+        
+        M1 = max(-1.0, min(1.0, M1))
+        M2 = max(-1.0, min(1.0, M2))
+        M3 = max(-1.0, min(1.0, M3))
+        M4 = max(-1.0, min(1.0, M4))
 
-
-
-
-
-
-# Send data to arduino
 def send_data():
- while True: # Repeat forever
-        serial.write(b'M1;M2;M3;M4')
+    cmd = f"{M1:.2f};{M2:.2f};{M3:.2f};{M4:.2f}\n"
+    if serial and serial.is_open:
+        serial.write(cmd.encode('utf-8'))
+
+def rov_control_thread():
+    while True:
+        save_joy()
+        calc_motor()
+        send_data()
+        time.sleep(0.1)
 
 
 
@@ -665,13 +669,9 @@ def send_data():
 
 # When WebServer Starts
 if __name__ == '__main__':
-    thread1 = threading.Thread(target=save_joy, daemon=True)
-    thread2 = threading.Thread(target=calc_motor, daemon=True)
-    thread3 = threading.Thread(target=send_data, daemon=True)
+    thread1 = threading.Thread(target=rov_control_thread, daemon=True)
     thread1.start()
-    thread2.start()
-    thread3.start()
-    
+     
     print("╔════════════════════════════════════════════════════╗")
     print("║          ROVcoPILOT Server Starting...             ║")
     print("║     Open http://IP:5000 in your browser    ║")
