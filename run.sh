@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd ~/Documents
-
 sudo apt install -y ustreamer
 python3 -m pip install --upgrade pip
 python3 -m pip install pyserial flask
